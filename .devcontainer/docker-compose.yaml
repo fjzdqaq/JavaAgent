@@ -1,0 +1,39 @@
+# docker network create utilities
+networks:
+  utilities:
+    external: true
+
+services:
+  java-agent-dev:
+    build: 
+      context: ..
+      dockerfile: .devcontainer/Dockerfile
+    volumes:
+      - ~/.gitconfig:/opt/python-user/.gitconfig
+      - ~/.ssh:/opt/python-user/.ssh
+      - ../.devcontainer/zshrc:/opt/python-user/.zshrc
+      - ..:/opt/python-user/code
+    command: ["tail -f /dev/null"]
+    environment:
+      - WEAVIATE_URL=http://weaviate:8080
+    depends_on:
+      - weaviate
+    networks:
+      - utilities
+
+  # Weaviate向量数据库
+  weaviate:
+    image: semitechnologies/weaviate:1.22.4
+    ports:
+      - "8080:8080"
+    environment:
+      AUTHENTICATION_ANONYMOUS_ACCESS_ENABLED: 'true'
+      PERSISTENCE_DATA_PATH: '/var/lib/weaviate'
+    networks:
+      - utilities
+
+volumes:
+  weaviate_data:
+
+
+

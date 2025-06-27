@@ -1,0 +1,18 @@
+{
+	"name": "java-agent-dev",
+	"dockerComposeFile": "docker-compose.yaml",
+	"service": "java-agent-dev",
+	"workspaceFolder": "/opt/python-user/code",
+	"customizations": {
+		"vscode": {
+			"settings": {
+				"terminal.integrated.defaultProfile.linux": "zsh"
+			},
+			"extensions": [
+				"ms-python.python"
+			]
+		}
+	},
+	"postCreateCommand": "pip install weaviate-client",
+	"remoteUser": "python-user"
+}

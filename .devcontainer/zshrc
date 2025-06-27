@@ -1,0 +1,34 @@
+# export ZSH="/opt/motiong/.oh-my-zsh"
+# already did in the dockerfile :)
+
+# Set name of the theme to load.
+ZSH_THEME="robbyrussell"
+
+# Which plugins would you like to load?
+plugins=(
+  git
+)
+
+source $ZSH/oh-my-zsh.sh
+
+# 基本环境变量
+export PYTHONPATH=.
+export WEAVIATE_URL="http://weaviate:8080"
+
+# Git和SSH配置
+if [ -f ~/.ssh/id_rsa ]; then
+    chmod 600 ~/.ssh/id_rsa
+fi
+if [ -f ~/.ssh/id_ed25519 ]; then
+    chmod 600 ~/.ssh/id_ed25519
+fi
+
+# 添加GitHub到known_hosts
+if [ ! -f ~/.ssh/known_hosts ] || ! grep -q "github.com" ~/.ssh/known_hosts; then
+    mkdir -p ~/.ssh
+    ssh-keyscan github.com >> ~/.ssh/known_hosts 2>/dev/null
+fi
+
+echo "🐍 Python开发环境已准备就绪"
+echo "📊 Weaviate: $WEAVIATE_URL"
+echo "🔑 Git配置已加载"
