@@ -20,7 +20,8 @@ RUN groupadd -g ${DOCKER_UID} ${DOCKER_GROUP} \
 
 RUN apt-get update && \
     apt-get install -y curl git zsh openssh-client && \
-    pip install --upgrade pip
+    pip install --upgrade pip && \
+    pip install requests>=2.28.0 beautifulsoup4>=4.11.0 html2text>=2020.1.16 lxml>=4.9.0 markdownify>=0.11.6
 
 # 安装oh-my-zsh
 RUN sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
