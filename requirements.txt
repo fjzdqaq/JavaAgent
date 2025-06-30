@@ -1,0 +1,19 @@
+# 网页爬虫相关依赖
+requests>=2.28.0
+beautifulsoup4>=4.11.0
+html2text>=2020.1.16
+lxml>=4.9.0
+markdownify>=0.11.6
+
+# AI和语言模型相关依赖
+langchain>=0.3.26
+langchain-google-genai>=2.1.5
+
+# 数据处理相关依赖
+pydantic>=2.7.4
+PyYAML>=6.0
+
+# 基础工具依赖
+urllib3>=2.0.0
+charset-normalizer>=3.0.0
+python-dotenv>=1.0.0 

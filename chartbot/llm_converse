@@ -1,0 +1,41 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+
+import getpass
+import os
+
+def setup_environment():
+    """设置环境变量和 LangSmith 配置"""
+    
+    # 尝试加载 .env 文件
+    try:
+        from dotenv import load_dotenv
+        load_dotenv()
+        print("✅ 已加载 .env 文件")
+    except ImportError:
+        print("⚠️  未安装 python-dotenv，跳过 .env 文件加载")
+        print("   可以运行: pip install python-dotenv")
+    
+    # 设置 LangSmith 跟踪
+    os.environ["LANGSMITH_TRACING"] = os.getenv("LANGSMITH_TRACING", "true")
+    
+    # 配置 LangSmith API Key
+    if "LANGSMITH_API_KEY" not in os.environ:
+        api_key = getpass.getpass("请输入您的 LangSmith API Key (可选): ")
+        if api_key:
+            os.environ["LANGSMITH_API_KEY"] = api_key
+    
+    # 配置 LangSmith 项目名称
+    if "LANGSMITH_PROJECT" not in os.environ:
+        project_name = input("请输入 LangSmith 项目名称 (默认为 'default'): ").strip()
+        if not project_name:
+            project_name = "default"
+        os.environ["LANGSMITH_PROJECT"] = project_name
+    
+    print(f"🚀 LangSmith 配置完成:")
+    print(f"   - 跟踪状态: {os.environ.get('LANGSMITH_TRACING', 'false')}")
+    print(f"   - 项目名称: {os.environ.get('LANGSMITH_PROJECT', 'default')}")
+    print(f"   - API Key: {'已设置' if os.environ.get('LANGSMITH_API_KEY') else '未设置'}")
+
+if __name__ == "__main__":
+    setup_environment()
